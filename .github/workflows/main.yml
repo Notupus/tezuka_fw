@@ -57,12 +57,6 @@ jobs:
         wget https://buildroot.org/downloads/buildroot-2024.11.1.tar.gz && tar -xvf buildroot-2024.11.1.tar.gz
        
         cd  ${{runner.workspace}}/build/buildroot-2024.11.1
-        make pluto_maiasdr_defconfig && make && mv ${{runner.workspace}}/build/buildroot-2024.11.1/output/images/tezuka.zip ${{runner.workspace}}/build/pluto.zip
-        make clean
-        make plutoplus_maiasdr_defconfig && make && mv ${{runner.workspace}}/build/buildroot-2024.11.1/output/images/tezuka.zip ${{runner.workspace}}/build/plutoplus.zip
-        make clean
-        make e200_maiasdr_defconfig && make && mv ${{runner.workspace}}/build/buildroot-2024.11.1/output/images/tezuka.zip ${{runner.workspace}}/build/antsdr_e200.zip
-        make clean
         make libre_maiasdr_defconfig && make && mv ${{runner.workspace}}/build/buildroot-2024.11.1/output/images/tezuka.zip ${{runner.workspace}}/build/libresdr.zip
        
     - name: Save zip Archive
