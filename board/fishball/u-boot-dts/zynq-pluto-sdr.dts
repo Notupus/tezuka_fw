@@ -1,5 +1,7 @@
 /*
- * LIBRE board DTS
+ * Analog Devices Inc. Pluto SDR board DTS
+ *
+ * Copyright (C) 2015-2018 Analog Devices Inc.
  *
  * SPDX-License-Identifier:	GPL-2.0+
  */
@@ -7,12 +9,12 @@
 #include "zynq-7000.dtsi"
 
 / {
-	model = "LibreSDR Rev.5 (Z7020-AD9363)";
+	model = "FISH Ball SDR Board (7010-AD9363)";
 	compatible = "xlnx,zynq-7000";
 
 	aliases {
 		ethernet0 = &gem0;
-		serial0 = &uart0;
+		serial0 = &uart1;
 		spi0 = &qspi;
 	};
 
@@ -23,42 +25,22 @@
 
 	chosen {
 		bootargs = "earlyprintk";
-		linux,stdout-path = &uart0;
-		stdout-path = &uart0;
+		linux,stdout-path = &uart1;
+		stdout-path = &uart1;
 	};
 
 	usb_phy0: phy0 {
 		compatible = "usb-nop-xceiv";
 		#phy-cells = <0>;
 	};
-	gpio_keys {
-		compatible = "gpio-keys";
-		#address-cells = <1>;
-		#size-cells = <0>;
-		button {
-			label = "Button";
-			gpios = <&gpio0 12 0>;
-			linux,code = <103>; /* up */
-			wakeup-source;
-			autorepeat;
-		};
-
-	};
-	
-	
 };
-
-
-
-	
-
 
 &qspi {
 	status = "okay";
 	is-dual = <0>;
 	num-cs = <1>;
 	flash@0 {
-		compatible = "n25q512a","micron,m25p80";
+		compatible = "n25q256a11,";
 		reg = <0x0>;
 		spi-tx-bus-width = <1>;
 		spi-rx-bus-width = <4>;
@@ -79,12 +61,12 @@
 		};
 		partition@qspi-linux {
 			label = "qspi-linux";
-			reg = <0x200000 0x1E00000>; /* 30M */
+			reg = <0x200000 0x0E00000>; /* 16M */
 		};
 	};
 };
 
-&uart0 {
+&uart1 {
 	status = "okay";
 };
 
@@ -93,10 +75,10 @@
 	dr_mode = "host";
 	usb-phy = <&usb_phy0>;
 };
+
 &sdhci0 {
 	u-boot,dm-pre-reloc;
-	status = "okay";
-	
+	status = "okay";	
 };
 
 &gem0 {
@@ -106,6 +88,5 @@
 
 	ethernet_phy0: ethernet-phy@0 {
 		reg = <0>;
-		reset-gpios = <&gpio0 46 0>;
 	};
 };
